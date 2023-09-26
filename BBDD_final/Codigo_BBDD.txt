@@ -1,0 +1,52 @@
+CREATE DATABASE Competencia
+    DEFAULT CHARACTER SET = 'utf8mb4';
+
+USE  Competencia;
+CREATE TABLE Establecimiento (
+  Codigo                  int(10) NOT NULL AUTO_INCREMENT, 
+  Nombre                  varchar(50), 
+  Responsable             varchar(50), 
+  Direccion               varchar(50), 
+  ServicioCodigo_servicio int(10) NOT NULL, 
+  PRIMARY KEY (Codigo));
+CREATE TABLE Manzana (
+  Codigo_manzana int(10) NOT NULL AUTO_INCREMENT, 
+  Nombre         varchar(50), 
+  Localidad      int(10), 
+  Direccion      int(10), 
+  PRIMARY KEY (Codigo_manzana));
+CREATE TABLE Manzana_Servicio (
+  ManzanaCodigo_manzana   int(10) NOT NULL, 
+  ServicioCodigo_servicio int(10) NOT NULL, 
+  PRIMARY KEY (ManzanaCodigo_manzana, 
+  ServicioCodigo_servicio));
+CREATE TABLE Mujeres (
+  Id_mujer          int(10) NOT NULL AUTO_INCREMENT, 
+  Documento         bigint(19), 
+  Tipo_de_documento varchar(10), 
+  Nombres           varchar(50), 
+  Apellidos         varchar(50), 
+  Telefono          bigint(19), 
+  Correo            varchar(50), 
+  Ciudad            varchar(50), 
+  Direccion         varchar(50), 
+  Ocupacion         varchar(50) 			, 
+  PRIMARY KEY (Id_mujer));
+CREATE TABLE Municipio (
+  Id_municipio          int(10) NOT NULL AUTO_INCREMENT, 
+  Servicio              varchar(50), 
+  Infraestructura       varchar(50), 
+  ManzanaCodigo_manzana int(10) NOT NULL, 
+  PRIMARY KEY (Id_municipio));
+CREATE TABLE Servicio (
+  Codigo_servicio       int(10) NOT NULL AUTO_INCREMENT, 
+  Nombre                varchar(50), 
+  Descripcion           varchar(50), 
+  EstablecimientoCodigo int(10) NOT NULL, 
+  MujeresId_mujer       int(10) NOT NULL, 
+  PRIMARY KEY (Codigo_servicio));
+ALTER TABLE Municipio ADD CONSTRAINT FKMunicipio103090 FOREIGN KEY (ManzanaCodigo_manzana) REFERENCES Manzana (Codigo_manzana);
+ALTER TABLE Manzana_Servicio ADD CONSTRAINT FKManzana_Se814087 FOREIGN KEY (ManzanaCodigo_manzana) REFERENCES Manzana (Codigo_manzana);
+ALTER TABLE Manzana_Servicio ADD CONSTRAINT FKManzana_Se916422 FOREIGN KEY (ServicioCodigo_servicio) REFERENCES Servicio (Codigo_servicio);
+ALTER TABLE Servicio ADD CONSTRAINT FKServicio330914 FOREIGN KEY (EstablecimientoCodigo) REFERENCES Establecimiento (Codigo);
+ALTER TABLE Servicio ADD CONSTRAINT FKServicio423327 FOREIGN KEY (MujeresId_mujer) REFERENCES Mujeres (Id_mujer);
